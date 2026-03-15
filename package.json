@@ -1,0 +1,23 @@
+{
+  "name": "rootwater-collective-website",
+  "version": "1.0.0",
+  "description": "Official website for Rootwater Collective — Conscious roots reggae",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000"
+  },
+  "keywords": [
+    "rootwater",
+    "reggae",
+    "music",
+    "website"
+  ],
+  "author": "Rootwater Collective",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rootwater-collective/website"
+  }
+}

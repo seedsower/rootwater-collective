@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore the albums of Rootwater Collective — Rivers & Roots and The Inner Meridian. Conscious roots reggae with full track listings and streaming links.">
+  <title>Music — Rootwater Collective</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <style>
+    /* Album-specific styling */
+    .album-section {
+      padding: var(--section-padding) 0;
+      position: relative;
+    }
+
+    .album-section:nth-child(odd) {
+      background: radial-gradient(circle at 20% 50%, rgba(45, 122, 58, 0.06) 0%, transparent 60%);
+    }
+
+    .album-section:nth-child(even) {
+      background: radial-gradient(circle at 80% 50%, rgba(212, 168, 67, 0.05) 0%, transparent 60%);
+    }
+
+    .album-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .album-cover-large {
+      position: sticky;
+      top: 120px;
+      width: 100%;
+      aspect-ratio: 1;
+      border: 1px solid var(--gold-dim);
+    }
+
+    .track-list {
+      list-style: none;
+    }
+
+    .track-item {
+      border-bottom: 1px solid rgba(212, 168, 67, 0.15);
+      transition: all 300ms ease;
+    }
+
+    .track-header {
+      display: grid;
+      grid-template-columns: auto 1fr auto auto;
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+      cursor: pointer;
+      align-items: center;
+    }
+
+    .track-header:hover {
+      padding-left: 1rem;
+      color: var(--gold);
+    }
+
+    .track-number {
+      font-family: var(--font-mono);
+      color: var(--gold);
+      font-size: 0.85rem;
+      width: 30px;
+    }
+
+    .track-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+    }
+
+    .track-duration {
+      font-family: var(--font-mono);
+      color: var(--cream-dim);
+      font-size: 0.85rem;
+    }
+
+    .track-metadata {
+      font-family: var(--font-mono);
+      color: var(--cream-dim);
+      font-size: 0.75rem;
+    }
+
+    .track-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 400ms var(--transition-smooth);
+      padding: 0 2rem;
+    }
+
+    .track-item.active .track-details {
+      max-height: 1000px;
+      padding: 0 2rem 2rem;
+    }
+
+    .track-item.active .track-header {
+      color: var(--gold);
+    }
+
+    .lyrics-excerpt {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      line-height: 2;
+      color: var(--cream-dim);
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+      border-left: 2px solid var(--gold-dim);
+    }
+
+    .lyrics-excerpt em {
+      font-family: var(--font-accent);
+      color: var(--gold);
+    }
+
+    .production-note {
+      background: var(--near-black);
+      border: 1px solid rgba(212, 168, 67, 0.2);
+      padding: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--cream-dim);
+      line-height: 1.8;
+    }
+
+    .streaming-links {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .streaming-links a {
+      color: var(--gold-dim);
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      transition: color 200ms ease;
+      position: relative;
+    }
+
+    .streaming-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width 300ms ease;
+    }
+
+    .streaming-links a:hover {
+      color: var(--gold);
+    }
+
+    .streaming-links a:hover::after {
+      width: 100%;
+    }
+
+    @media (max-width: 1024px) {
+      .album-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .album-cover-large {
+        position: relative;
+        top: 0;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .track-header {
+        grid-template-columns: auto 1fr;
+        gap: 1rem;
+      }
+
+      .track-duration,
+      .track-metadata {
+        grid-column: 2;
+        font-size: 0.75rem;
+      }
+
+      .track-title {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-to-content">Skip to content</a>
+
+  <nav>
+    <a href="/" class="logo">ROOTWATER</a>
+    <ul class="nav-links">
+      <li><a href="/pages/music.html">Music</a></li>
+      <li><a href="/pages/lyrics.html">Lyrics</a></li>
+      <li><a href="/pages/story.html">Story</a></li>
+      <li><a href="/pages/connect.html">Connect</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle mobile menu">☰</button>
+  </nav>
+
+  <div class="mobile-nav-overlay">
+    <ul>
+      <li><a href="/pages/music.html">Music</a></li>
+      <li><a href="/pages/lyrics.html">Lyrics</a></li>
+      <li><a href="/pages/story.html">Story</a></li>
+      <li><a href="/pages/connect.html">Connect</a></li>
+    </ul>
+  </div>
+
+  <main id="main-content" class="page-content">
+
+    <!-- Page Header -->
+    <section style="padding: 150px 0 80px; text-align: center;">
+      <div class="container">
+        <h1 class="reveal">Music</h1>
+        <p class="accent-text reveal" style="font-size: 1.3rem; margin-top: 1rem;">
+          Two albums. One frequency. One breath.
+        </p>
+      </div>
+    </section>
+
+    <div class="rastafari-bar"></div>
+
+    <!-- RIVERS & ROOTS -->
+    <section id="rivers-and-roots" class="album-section">
+      <div class="container">
+
+        <div class="album-grid">
+
+          <!-- Album Cover -->
+          <div>
+            <img
+              src="../images/rootsandrivers.png"
+              alt="Rivers & Roots album cover"
+              class="album-cover-large reveal"
+            >
+
+            <!-- Streaming Links -->
+            <div class="streaming-links reveal" style="justify-content: center; margin-top: 2rem;">
+              <a href="#" aria-label="Listen on Spotify">SPOTIFY</a>
+              <a href="#" aria-label="Listen on Apple Music">APPLE MUSIC</a>
+              <a href="#" aria-label="Listen on Tidal">TIDAL</a>
+              <a href="#" aria-label="Buy on Bandcamp">BANDCAMP</a>
+            </div>
+          </div>
+
+          <!-- Album Info & Tracks -->
+          <div>
+            <div class="reveal">
+              <h2 style="font-size: 3rem; margin-bottom: 0.5rem;">Rivers & Roots</h2>
+              <p class="accent-text" style="font-size: 1.2rem; margin-bottom: 1rem;">Definitive Edition</p>
+              <p class="mono-text" style="color: var(--gold); margin-bottom: 2rem;">20 TRACKS · 78 MIN · 2025</p>
+
+              <p style="color: var(--cream-dim); line-height: 1.9; margin-bottom: 2rem; max-width: 600px;">
+                Twenty songs. One frequency. One wind. One world waking up. This is the album where reggae remembered it was a theory of everything — where the one-drop riddim becomes a cosmological argument and every bassline is a proof.
+              </p>
+            </div>
+
+            <!-- Track Listing -->
+            <ul class="track-list">
+
+              <li class="track-item reveal reveal-stagger">
+                <div class="track-header">
+                  <span class="track-number">01</span>
+                  <span class="track-title">Rivers Still Rising</span>
+                  <span class="track-duration">4:32</span>
+                  <span class="track-metadata">Em · 78 BPM</span>
+                </div>
+                <div class="track-details">
+                  <div class="lyrics-excerpt">
+                    <p><em>The river runs clean</em> / when the frequency is pure<br>
+                    And the root holds deep / when the foundation secure<br>
+                    What the physicist measured / the mystic already told<br>
+                    <em>Every part contains the whole</em></p>
+                  </div>
+                  <div class="production-note">
+                    <strong style="color: var(--gold); display: block; margin-bottom: 0.5rem;">Production Note:</strong>
+                    Opening track. Sets the frequency. Analog dub delays, one-drop foundation, live horns in D major over E minor root. The river is both metaphor and method.
+                  </div>
+                </div>
+              </li>
+
+              <li class="track-item reveal reveal-stagger">
+                <div class="track-header">
+                  <span class="track-number">02</span>
+                  <span class="track-title">Theory of Everything</span>
+                  <span class="track-duration">5:18</span>
+                  <span class="track-metadata">Am · 72 BPM</span>
+                </div>
+                <div class="track-details">
+                  <div class="lyrics-excerpt">
+                    <p>They say the universe is expanding / but I feel it contracting<br>
+                    <em>Down to this moment / this breath / this bass</em><br>
+                    If you could hear the frequency / underneath the frequency<br>
+                    You'd know what Marley knew / what Einstein proved too late</p>
+                  </div>
+                  <div class="production-note">
+                    <strong style="color: var(--gold); display: block; margin-bottom: 0.5rem;">Production Note:</strong>
+                    Built on a single bass note for the first two minutes. Patience as architecture. The space between beats as sacred geometry.
+                  </div>
+                </div>
+              </li>
+
+              <li class="track-item reveal reveal-stagger">
+                <div class="track-header">
+                  <span class="track-number">03</span>
+                  <span class="track-title">Testimony & Data</span>
+                  <span class="track-duration">4:45</span>
+                  <span class="track-metadata">G · 76 BPM</span>
+                </div>
+              </li>
+
+              <li class="track-item reveal reveal-stagger">
+                <div class="track-header">
+                  <span class="track-number">04</span>
+                  <span class="track-title">One Drop Cosmology</span>
+                  <span class="track-duration">6:12</span>
+                  <span class="track-metadata">Dm · 70 BPM</span>
+                </div>
+              </li>
+
+              <li class="track-item reveal reveal-stagger">
+                <div class="track-header">
+                  <span class="track-number">05</span>
+                  <span class="track-title">The Frequency Remembers</span>
+                  <span class="track-duration">3:58</span>
+                  <span class="track-metadata">C · 82 BPM</span>
+                </div>
+              </li>
+
+              <li class="track-item reveal reveal-stagger">
+                <div class="track-header">
+                  <span class="track-number">06</span>
+                  <span class="track-title">Babylon's Bandwidth</span>
+                  <span class="track-duration">4:21</span>
+                  <span class="track-metadata">Bm · 74 BPM</span>
+                </div>
+              </li>
+
+              <li class="track-item reveal reveal-stagger">
+                <div class="track-header">
+                  <span class="track-number">07</span>
+                  <span class="track-title">Sacred Economics</span>
+                  <span class="track-duration">5:03</span>
+                  <span class="track-metadata">F#m · 68 BPM</span>
+                </div>
+              </li>
+
+              <li class="track-item reveal reveal-stagger">
+                <div class="track-header">
+                  <span class="track-number">08</span>
+                  <span class="track-title">Root & Water Interlude</span>
+                  <span class="track-duration">2:14</span>
+                  <span class="track-metadata">Ambient</span>
+                </div>
+              </li>
+
+              <li class="track-item reveal reveal-stagger">
+                <div class="track-header">
+                  <span class="track-number">09</span>
+                  <span class="track-title">When the Data Sang</span>
+                  <span class="track-duration">4:38</span>
+                  <span class="track-metadata">E · 80 BPM</span>
+                </div>
+              </li>
+
+              <li class="track-item reveal reveal-stagger">
+                <div class="track-header">
+                  <span class="track-number">10</span>
+                  <span class="track-title">Marley Never Cited a Statistic</span>
+                  <span class="track-duration">5:27</span>
+                  <span class="track-metadata">Am · 72 BPM</span>
+                </div>
+              </li>
+
+              <!-- Tracks 11-20 abbreviated for brevity -->
+              <li class="track-item reveal reveal-stagger">
+                <div class="track-header">
+                  <span class="track-number">11-20</span>
+                  <span class="track-title">...remaining tracks</span>
+                  <span class="track-duration">—</span>
+                  <span class="track-metadata">Various</span>
+                </div>
+              </li>
+
+            </ul>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <div class="rastafari-bar"></div>
+
+    <!-- THE INNER MERIDIAN -->
+    <section id="the-inner-meridian" class="album-section">
+      <div class="container">
+
+        <div class="album-grid">
+
+          <!-- Album Cover -->
+          <div>
+            <img
+              src="../images/innermeridian.png"
+              alt="The Inner Meridian album cover"
+              class="album-cover-large reveal"
+            >
+
+            <!-- Streaming Links -->
+            <div class="streaming-links reveal" style="justify-content: center; margin-top: 2rem;">
+              <a href="#" aria-label="Listen on Spotify">SPOTIFY</a>
+              <a href="#" aria-label="Listen on Apple Music">APPLE MUSIC</a>
+              <a href="#" aria-label="Listen on Tidal">TIDAL</a>
+              <a href="#" aria-label="Buy on Bandcamp">BANDCAMP</a>
+            </div>
+          </div>
+
+          <!-- Album Info & Tracks -->
+          <div>
+            <div class="reveal">
+              <h2 style="font-size: 3rem; margin-bottom: 0.5rem;">The Inner Meridian</h2>
+              <p class="accent-text" style="font-size: 1.2rem; margin-bottom: 1rem;">Sophomore Album</p>
+              <p class="mono-text" style="color: var(--gold); margin-bottom: 2rem;">12 TRACKS · 52 MIN · 2026</p>
+
+              <p style="color: var(--cream-dim); line-height: 1.9; margin-bottom: 2rem; max-width: 600px;">
+                Twelve songs. One room. One mirror. One breath. Where Rivers & Roots looked outward at systems, The Inner Meridian turns inward — to the cartography of consciousness, the meridians that run through us all.
+              </p>
+            </div>
+
+            <!-- Track Listing -->
+            <ul class="track-list">
+
+              <li class="track-item reveal reveal-stagger">
+                <div class="track-header">
+                  <span class="track-number">01</span>
+                  <span class="track-title">The Mirror Opens</span>
+                  <span class="track-duration">4:18</span>
+                  <span class="track-metadata">Dm · 74 BPM</span>
+                </div>
+                <div class="track-details">
+                  <div class="lyrics-excerpt">
+                    <p><em>Look into the mirror / but don't look at your face</em><br>
+                    Look through it / look past it / look into space<br>
+                    The boundary is a window / not a wall<br>
+                    And when you stop knocking / the door was open all along</p>
+                  </div>
+                  <div class="production-note">
+                    <strong style="color: var(--gold); display: block; margin-bottom: 0.5rem;">Production Note:</strong>
+                    Recorded in a single room with all musicians present. No headphones. Pure acoustic bleed. The sound of being in the same space, breathing the same air.
+                  </div>
+                </div>
+              </li>
+
+              <li class="track-item reveal reveal-stagger">
+                <div class="track-header">
+                  <span class="track-number">02</span>
+                  <span class="track-title">Cartography of Breath</span>
+                  <span class="track-duration">5:42</span>
+                  <span class="track-metadata">Am · 68 BPM</span>
+                </div>
+              </li>
+
+              <li class="track-item reveal reveal-stagger">
+                <div class="track-header">
+                  <span class="track-number">03-12</span>
+                  <span class="track-title">...remaining tracks</span>
+                  <span class="track-duration">—</span>
+                  <span class="track-metadata">Various</span>
+                </div>
+              </li>
+
+            </ul>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <div class="rastafari-bar"></div>
+
+    <!-- Footer -->
+    <footer style="padding: 4rem 0 2rem;">
+      <div class="container">
+        <div style="text-align: center; color: var(--cream-dim); font-size: 0.85rem;">
+          <p style="margin-bottom: 0.5rem;">© 2026 Rootwater Collective</p>
+          <p class="accent-text" style="font-size: 0.9rem; color: var(--gold-dim);">
+            If you listen carefully now — you will hear it.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // Track accordion functionality
+    document.querySelectorAll('.track-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const trackItem = header.parentElement;
+        const isActive = trackItem.classList.contains('active');
+
+        // Close all tracks
+        document.querySelectorAll('.track-item').forEach(item => {
+          item.classList.remove('active');
+        });
+
+        // Open clicked track if it wasn't active
+        if (!isActive) {
+          trackItem.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
