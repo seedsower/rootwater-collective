@@ -158,6 +158,48 @@
       width: 100%;
     }
 
+    /* Custom Audio Player Styling */
+    .album-player {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: var(--near-black);
+      border: 1px solid rgba(212, 168, 67, 0.3);
+    }
+
+    .album-player audio {
+      width: 100%;
+      height: 40px;
+      outline: none;
+    }
+
+    .album-player audio::-webkit-media-controls-panel {
+      background: var(--near-black);
+    }
+
+    .album-player audio::-webkit-media-controls-play-button,
+    .album-player audio::-webkit-media-controls-pause-button {
+      filter: invert(0.8) sepia(1) saturate(5) hue-rotate(15deg);
+    }
+
+    .album-player audio::-webkit-media-controls-current-time-display,
+    .album-player audio::-webkit-media-controls-time-remaining-display {
+      color: var(--cream);
+    }
+
+    .album-player audio::-webkit-media-controls-timeline {
+      background: rgba(212, 168, 67, 0.2);
+      border-radius: 0;
+    }
+
+    .player-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.75rem;
+      text-align: center;
+    }
+
     @media (max-width: 1024px) {
       .album-grid {
         grid-template-columns: 1fr;
@@ -241,6 +283,15 @@
               alt="Rivers & Roots album cover"
               class="album-cover-large reveal"
             >
+
+            <!-- Audio Player -->
+            <div class="album-player reveal">
+              <div class="player-label">ALBUM PREVIEW</div>
+              <audio controls preload="metadata">
+                <source src="../audio/rivers-and-roots-preview.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+              </audio>
+            </div>
 
             <!-- Streaming Links -->
             <div class="streaming-links reveal" style="justify-content: center; margin-top: 2rem;">
@@ -414,6 +465,15 @@
               alt="The Inner Meridian album cover"
               class="album-cover-large reveal"
             >
+
+            <!-- Audio Player -->
+            <div class="album-player reveal">
+              <div class="player-label">ALBUM PREVIEW</div>
+              <audio controls preload="metadata">
+                <source src="../audio/inner-meridian-preview.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+              </audio>
+            </div>
 
             <!-- Streaming Links -->
             <div class="streaming-links reveal" style="justify-content: center; margin-top: 2rem;">
