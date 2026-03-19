@@ -2,8 +2,8 @@
 // Update this file with your CDN base URL, then use it across the site
 
 const AUDIO_CDN = {
-  // Cloudflare R2 CDN base URL
-  baseUrl: 'https://bad01a348c24514c76d91efe5457b919.r2.cloudflarestorage.com/rootwater',
+  // Cloudflare R2 public CDN URL
+  baseUrl: 'https://pub-11d4fa5899204f558f213e9d1764cf44.r2.dev',
 
   // Album preview files
   albums: {

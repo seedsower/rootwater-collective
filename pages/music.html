@@ -200,6 +200,81 @@
       text-align: center;
     }
 
+    /* Playlist Styles */
+    .playlist-container {
+      margin-top: 2rem;
+      background: var(--near-black);
+      border: 1px solid rgba(212, 168, 67, 0.3);
+    }
+
+    .playlist-player {
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(212, 168, 67, 0.2);
+    }
+
+    .playlist-player audio {
+      width: 100%;
+      outline: none;
+    }
+
+    .now-playing {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      text-align: center;
+    }
+
+    .playlist-tracks {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .playlist-track {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid rgba(212, 168, 67, 0.1);
+      cursor: pointer;
+      transition: all 200ms ease;
+      align-items: center;
+    }
+
+    .playlist-track:hover {
+      background: rgba(212, 168, 67, 0.05);
+      padding-left: 2rem;
+    }
+
+    .playlist-track.playing {
+      background: rgba(212, 168, 67, 0.1);
+      border-left: 3px solid var(--gold);
+    }
+
+    .playlist-track.playing .track-number {
+      color: var(--gold);
+    }
+
+    .playlist-track.playing .track-title {
+      color: var(--gold);
+    }
+
+    .track-play-icon {
+      width: 20px;
+      text-align: center;
+      color: var(--gold-dim);
+      font-size: 0.9rem;
+    }
+
+    .playlist-track.playing .track-play-icon::before {
+      content: '▶';
+      color: var(--gold);
+    }
+
+    .playlist-track:not(.playing) .track-play-icon::before {
+      content: '▷';
+    }
+
     @media (max-width: 1024px) {
       .album-grid {
         grid-template-columns: 1fr;
@@ -284,13 +359,18 @@
               class="album-cover-large reveal"
             >
 
-            <!-- Audio Player -->
-            <div class="album-player reveal">
-              <div class="player-label">ALBUM PREVIEW</div>
-              <audio controls preload="metadata" crossorigin="anonymous">
-                <source src="https://bad01a348c24514c76d91efe5457b919.r2.cloudflarestorage.com/rootwater/rivers-and-roots-preview.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-              </audio>
+            <!-- Playlist Player -->
+            <div class="playlist-container reveal">
+              <div class="player-label">STREAM FULL ALBUM</div>
+              <div class="playlist-player">
+                <div class="now-playing" id="now-playing-rivers">Select a track to play</div>
+                <audio id="audio-player-rivers" controls preload="metadata">
+                  Your browser does not support the audio element.
+                </audio>
+              </div>
+              <div class="playlist-tracks" id="playlist-rivers">
+                <!-- Tracks will be loaded by JavaScript -->
+              </div>
             </div>
 
             <!-- Streaming Links -->
@@ -581,6 +661,66 @@
           trackItem.classList.add('active');
         }
       });
+    });
+
+    // Playlist Player for Rivers & Roots
+    const riversPlaylist = [
+      { number: '01', title: 'Rivers Still Rising', file: 'Rivers Still Rising.mp3' },
+      { number: '02', title: 'Algorithm Babylon', file: 'ALGORITHM BABYLON.mp3' },
+      { number: '03', title: 'Blood Meridian', file: 'BLOOD MERIDIAN.mp3' },
+      { number: '04', title: 'Concrete Garden', file: 'CONCRETE GARDEN.mp3' },
+      { number: '05', title: 'Cornerstone', file: 'CORNERSTONE.mp3' },
+      { number: '06', title: 'Digital Griot', file: 'DIGITAL GRIOT.mp3' },
+      { number: '07', title: 'Mystic Whisper', file: 'MYSTIC WHISPER.mp3' },
+      { number: '08', title: 'No Key, No Door', file: 'NO KEY, NO DOOR.mp3' },
+      { number: '09', title: 'Salt of the Earth', file: 'SALT OF THE EARTH.mp3' },
+      { number: '10', title: 'Screen Light Serenade', file: 'SCREEN LIGHT SERENADE.mp3' },
+      { number: '11', title: 'The Hardest Thing', file: 'THE HARDEST THING.mp3' },
+      { number: '12', title: 'Thirty Pieces', file: 'THIRTY PIECES.mp3' },
+      { number: '13', title: 'Till the Whole Earth Sing', file: 'TILL THE WHOLE EARTH SING.mp3' }
+    ];
+
+    const cdnBase = 'https://pub-11d4fa5899204f558f213e9d1764cf44.r2.dev/';
+    const audioPlayer = document.getElementById('audio-player-rivers');
+    const nowPlaying = document.getElementById('now-playing-rivers');
+    const playlistContainer = document.getElementById('playlist-rivers');
+    let currentTrackIndex = -1;
+
+    // Build playlist HTML
+    riversPlaylist.forEach((track, index) => {
+      const trackEl = document.createElement('div');
+      trackEl.className = 'playlist-track';
+      trackEl.innerHTML = `
+        <div class="track-play-icon"></div>
+        <span class="track-title">${track.title}</span>
+        <span class="track-number">${track.number}</span>
+      `;
+      trackEl.addEventListener('click', () => playTrack(index));
+      playlistContainer.appendChild(trackEl);
+    });
+
+    function playTrack(index) {
+      currentTrackIndex = index;
+      const track = riversPlaylist[index];
+
+      // Update audio source
+      audioPlayer.src = cdnBase + encodeURIComponent(track.file);
+      audioPlayer.play();
+
+      // Update now playing
+      nowPlaying.textContent = `${track.number}. ${track.title}`;
+
+      // Update visual states
+      document.querySelectorAll('.playlist-track').forEach((el, i) => {
+        el.classList.toggle('playing', i === index);
+      });
+    }
+
+    // Auto-play next track when current ends
+    audioPlayer.addEventListener('ended', () => {
+      if (currentTrackIndex < riversPlaylist.length - 1) {
+        playTrack(currentTrackIndex + 1);
+      }
     });
   </script>
 </body>
