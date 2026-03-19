@@ -1,6 +1,6 @@
 # Redirect clean URLs to actual pages
 /music    /pages/music.html    200
-/lyrics   /pages/lyrics.html   200
+/merch    /pages/merch.html    200
 /story    /pages/story.html    200
 /connect  /pages/connect.html  200
 

@@ -8,8 +8,8 @@
   status = 200
 
 [[redirects]]
-  from = "/lyrics"
-  to = "/pages/lyrics.html"
+  from = "/merch"
+  to = "/pages/merch.html"
   status = 200
 
 [[redirects]]

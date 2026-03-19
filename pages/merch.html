@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Rootwater Collective merchandise — Vinyl records, apparel, and conscious goods. Support the frequency.">
+  <title>Merch — Rootwater Collective</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <style>
+    .merch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+      margin: 4rem 0;
+    }
+
+    .merch-item {
+      background: var(--near-black);
+      border: 1px solid rgba(212, 168, 67, 0.2);
+      transition: all 300ms ease;
+      overflow: hidden;
+    }
+
+    .merch-item:hover {
+      border-color: var(--gold);
+      transform: translateY(-4px);
+    }
+
+    .merch-image {
+      width: 100%;
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, var(--green-deep) 0%, var(--black) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--gold-dim);
+      letter-spacing: 0.2em;
+      text-align: center;
+      border-bottom: 1px solid rgba(212, 168, 67, 0.2);
+    }
+
+    .merch-info {
+      padding: 2rem;
+    }
+
+    .merch-category {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.5rem;
+    }
+
+    .merch-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .merch-description {
+      color: var(--cream-dim);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .merch-price {
+      font-family: var(--font-mono);
+      font-size: 1.2rem;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-shop {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      background: transparent;
+      border: 1px solid var(--gold-dim);
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      transition: all 300ms ease;
+      cursor: pointer;
+    }
+
+    .btn-shop:hover {
+      background: var(--gold);
+      color: var(--black);
+      border-color: var(--gold);
+    }
+
+    .coming-soon {
+      opacity: 0.6;
+    }
+
+    .coming-soon .btn-shop {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 768px) {
+      .merch-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-to-content">Skip to content</a>
+
+  <nav>
+    <a href="/" class="logo">ROOTWATER</a>
+    <ul class="nav-links">
+      <li><a href="/pages/music.html">Music</a></li>
+      <li><a href="/pages/merch.html">Merch</a></li>
+      <li><a href="/pages/story.html">Story</a></li>
+      <li><a href="/pages/connect.html">Connect</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle mobile menu">☰</button>
+  </nav>
+
+  <div class="mobile-nav-overlay">
+    <ul>
+      <li><a href="/pages/music.html">Music</a></li>
+      <li><a href="/pages/merch.html">Merch</a></li>
+      <li><a href="/pages/story.html">Story</a></li>
+      <li><a href="/pages/connect.html">Connect</a></li>
+    </ul>
+  </div>
+
+  <main id="main-content" class="page-content">
+
+    <!-- Page Header -->
+    <section style="padding: 150px 0 80px; text-align: center;">
+      <div class="container">
+        <h1 class="reveal">Merch</h1>
+        <p class="accent-text reveal" style="font-size: 1.3rem; margin-top: 1rem;">
+          Support the frequency. Wear the message.
+        </p>
+      </div>
+    </section>
+
+    <div class="rastafari-bar"></div>
+
+    <!-- Merch Items -->
+    <section style="padding: var(--section-padding) 0;">
+      <div class="container">
+
+        <div class="merch-grid">
+
+          <!-- Rivers & Roots Vinyl -->
+          <article class="merch-item reveal reveal-stagger">
+            <div class="merch-image">
+              RIVERS<br>& ROOTS<br>VINYL
+            </div>
+            <div class="merch-info">
+              <div class="merch-category">VINYL</div>
+              <h3 class="merch-title">Rivers & Roots — 2xLP</h3>
+              <p class="merch-description">
+                Double vinyl, gatefold sleeve. 180g pressing. All 20 tracks. Mastered for analog warmth.
+              </p>
+              <div class="merch-price">$35.00</div>
+              <a href="#" class="btn-shop">PRE-ORDER</a>
+            </div>
+          </article>
+
+          <!-- Inner Meridian Vinyl -->
+          <article class="merch-item reveal reveal-stagger">
+            <div class="merch-image" style="background: linear-gradient(135deg, var(--gold-dim) 0%, var(--black) 100%);">
+              THE INNER<br>MERIDIAN<br>VINYL
+            </div>
+            <div class="merch-info">
+              <div class="merch-category">VINYL</div>
+              <h3 class="merch-title">The Inner Meridian — LP</h3>
+              <p class="merch-description">
+                Single vinyl, heavyweight sleeve. 180g pressing. 12 tracks. One room. One breath.
+              </p>
+              <div class="merch-price">$28.00</div>
+              <a href="#" class="btn-shop">PRE-ORDER</a>
+            </div>
+          </article>
+
+          <!-- Frequency T-Shirt -->
+          <article class="merch-item reveal reveal-stagger coming-soon">
+            <div class="merch-image">
+              FREQUENCY<br>TEE
+            </div>
+            <div class="merch-info">
+              <div class="merch-category">APPAREL</div>
+              <h3 class="merch-title">Frequency T-Shirt</h3>
+              <p class="merch-description">
+                100% organic cotton. Screen-printed. "Every part contains the whole" back print.
+              </p>
+              <div class="merch-price">$25.00</div>
+              <button class="btn-shop" disabled>COMING SOON</button>
+            </div>
+          </article>
+
+          <!-- Theory of Everything Hoodie -->
+          <article class="merch-item reveal reveal-stagger coming-soon">
+            <div class="merch-image">
+              THEORY OF<br>EVERYTHING<br>HOODIE
+            </div>
+            <div class="merch-info">
+              <div class="merch-category">APPAREL</div>
+              <h3 class="merch-title">Theory of Everything Hoodie</h3>
+              <p class="merch-description">
+                Heavy fleece. Embroidered logo. Conscious comfort for conscious minds.
+              </p>
+              <div class="merch-price">$55.00</div>
+              <button class="btn-shop" disabled>COMING SOON</button>
+            </div>
+          </article>
+
+          <!-- Album Art Print -->
+          <article class="merch-item reveal reveal-stagger coming-soon">
+            <div class="merch-image">
+              ART<br>PRINT
+            </div>
+            <div class="merch-info">
+              <div class="merch-category">PRINT</div>
+              <h3 class="merch-title">Rivers & Roots Art Print</h3>
+              <p class="merch-description">
+                18x18" museum-quality giclée print. Signed and numbered. Limited to 100.
+              </p>
+              <div class="merch-price">$40.00</div>
+              <button class="btn-shop" disabled>COMING SOON</button>
+            </div>
+          </article>
+
+          <!-- Cassette Bundle -->
+          <article class="merch-item reveal reveal-stagger coming-soon">
+            <div class="merch-image">
+              CASSETTE<br>BUNDLE
+            </div>
+            <div class="merch-info">
+              <div class="merch-category">PHYSICAL MEDIA</div>
+              <h3 class="merch-title">Complete Cassette Bundle</h3>
+              <p class="merch-description">
+                Both albums on tape. Hand-dubbed. Includes digital download codes.
+              </p>
+              <div class="merch-price">$20.00</div>
+              <button class="btn-shop" disabled>COMING SOON</button>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Info Section -->
+        <div class="reveal" style="max-width: 600px; margin: 6rem auto 0; text-align: center;">
+          <div class="rastafari-bar" style="margin-bottom: 3rem;"></div>
+          <p style="color: var(--cream-dim); font-size: 1rem; line-height: 2; margin-bottom: 1.5rem;">
+            All proceeds support independent music, conscious art, and the continued frequency of Rootwater Collective.
+          </p>
+          <p class="accent-text" style="color: var(--gold); font-size: 1.1rem;">
+            Questions? Email us at <a href="mailto:merch@rootwatercollective.com" style="color: var(--gold); text-decoration: underline;">merch@rootwatercollective.com</a>
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="rastafari-bar"></div>
+
+    <!-- Footer -->
+    <footer style="padding: 4rem 0 2rem;">
+      <div class="container">
+        <div style="text-align: center; color: var(--cream-dim); font-size: 0.85rem;">
+          <p style="margin-bottom: 0.5rem;">© 2026 Rootwater Collective</p>
+          <p class="accent-text" style="font-size: 0.9rem; color: var(--gold-dim);">
+            If you listen carefully now — you will hear it.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
