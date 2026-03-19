@@ -1,25 +1,41 @@
 # Audio Files
 
-This directory contains audio previews for the albums displayed on the music page.
+This directory is for audio file documentation and configuration. The actual MP3 files are hosted on a CDN for optimal streaming performance.
+
+## 🎵 CDN Streaming (Recommended)
+
+The audio players are configured to stream from a CDN. See **[CDN-SETUP.md](CDN-SETUP.md)** for detailed setup instructions.
+
+**Quick Start:**
+1. Choose a CDN provider (Cloudflare R2, Netlify, AWS, etc.)
+2. Upload your MP3 preview files
+3. Update the URLs in `pages/music.html`
 
 ## Required Files
 
-To enable the audio players, add the following MP3 files to this directory:
+Upload these files to your CDN:
 
-1. **rivers-and-roots-preview.mp3** - Preview/sample track from Rivers & Roots album
-2. **inner-meridian-preview.mp3** - Preview/sample track from The Inner Meridian album
+1. **rivers-and-roots-preview.mp3** - Rivers & Roots album preview (30-90 sec)
+2. **inner-meridian-preview.mp3** - Inner Meridian album preview (30-90 sec)
 
-## Recommendations
+## File Specifications
 
-- **File size**: Keep previews under 10MB for faster loading
-- **Duration**: 30-90 second previews work best
-- **Quality**: 192kbps MP3 or higher recommended
-- **Format**: MP3 (MPEG Audio Layer 3)
+- **Format:** MP3 (MPEG Audio Layer 3)
+- **Bitrate:** 192-320 kbps recommended
+- **Duration:** 30-90 seconds
+- **Size:** 2-5MB per file
+- **Sample Rate:** 44.1 kHz
 
-## Usage
+## Configuration
 
-The audio players on `/pages/music.html` will automatically load these files when present. If the files are missing, the players will display an error message.
+Edit `config.js` in this directory to set your CDN base URL once, rather than updating multiple files.
 
-## Alternative Sources
+## Local Testing (Optional)
 
-If you want to use external audio hosting (like SoundCloud, Bandcamp embeds, or streaming services), you can replace the `<audio>` elements in `pages/music.html` with iframe embeds from your preferred platform.
+If you want to test locally before uploading to CDN:
+1. Place MP3 files in this directory
+2. Temporarily update `pages/music.html` to use relative paths:
+   ```
+   src="../audio/rivers-and-roots-preview.mp3"
+   ```
+3. Before deploying, switch back to CDN URLs
