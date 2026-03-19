@@ -232,7 +232,19 @@
         </div>
 
         <div class="contact-form-container reveal">
-          <form class="contact-form">
+          <form
+            class="contact-form"
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            data-netlify-honeypot="bot-field"
+            action="/pages/connect.html?success=true#booking-form"
+          >
+            <!-- Honeypot for spam prevention -->
+            <input type="hidden" name="form-name" value="contact">
+            <div style="display: none;">
+              <label>Don't fill this out if you're human: <input name="bot-field"></label>
+            </div>
 
             <div class="form-group">
               <label for="name">Your Name</label>
@@ -280,6 +292,11 @@
 
             <button type="submit" class="btn" style="width: 100%;">Send Message</button>
 
+            <!-- Success message -->
+            <div id="contact-success" style="display: none; margin-top: 2rem; padding: 1.5rem; background: rgba(45, 122, 58, 0.2); border: 1px solid var(--gold); color: var(--gold); text-align: center;">
+              ✓ Message sent! We'll get back to you soon.
+            </div>
+
           </form>
         </div>
 
@@ -298,7 +315,20 @@
         </div>
 
         <div style="max-width: 500px; margin: 0 auto;">
-          <form class="newsletter-form reveal">
+          <form
+            class="newsletter-form reveal"
+            name="newsletter"
+            method="POST"
+            data-netlify="true"
+            data-netlify-honeypot="bot-field-newsletter"
+            action="/pages/connect.html?newsletter=true#newsletter"
+          >
+            <!-- Honeypot for spam prevention -->
+            <input type="hidden" name="form-name" value="newsletter">
+            <div style="display: none;">
+              <label>Don't fill this out if you're human: <input name="bot-field-newsletter"></label>
+            </div>
+
             <div class="form-group">
               <label for="newsletter-email">Email Address</label>
               <input
@@ -311,6 +341,11 @@
               >
             </div>
             <button type="submit" class="btn" style="width: 100%;">Join the Frequency</button>
+
+            <!-- Success message -->
+            <div id="newsletter-success" style="display: none; margin-top: 2rem; padding: 1.5rem; background: rgba(45, 122, 58, 0.2); border: 1px solid var(--gold); color: var(--gold); text-align: center;">
+              ✓ You've joined the frequency! Check your email.
+            </div>
           </form>
         </div>
 
@@ -402,5 +437,35 @@
   </main>
 
   <script src="../js/main.js"></script>
+  <script>
+    // Show success message when form is submitted
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (urlParams.get('success') === 'true') {
+      const successMsg = document.getElementById('contact-success');
+      const form = document.querySelector('.contact-form');
+      if (successMsg && form) {
+        successMsg.style.display = 'block';
+        form.reset();
+        // Scroll to the message
+        setTimeout(() => {
+          successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+      }
+    }
+
+    if (urlParams.get('newsletter') === 'true') {
+      const successMsg = document.getElementById('newsletter-success');
+      const form = document.querySelector('.newsletter-form');
+      if (successMsg && form) {
+        successMsg.style.display = 'block';
+        form.reset();
+        // Scroll to the message
+        setTimeout(() => {
+          successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+      }
+    }
+  </script>
 </body>
 </html>
