@@ -215,6 +215,7 @@
     .playlist-player audio {
       width: 100%;
       outline: none;
+      margin-bottom: 1rem;
     }
 
     .now-playing {
@@ -223,6 +224,68 @@
       color: var(--gold);
       margin-bottom: 0.75rem;
       text-align: center;
+    }
+
+    .player-controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .control-btn {
+      background: transparent;
+      border: 1px solid var(--gold-dim);
+      color: var(--gold);
+      padding: 0.5rem 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 200ms ease;
+    }
+
+    .control-btn:hover {
+      background: var(--gold);
+      color: var(--black);
+      border-color: var(--gold);
+    }
+
+    .control-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .control-btn.active {
+      background: rgba(212, 168, 67, 0.2);
+      border-color: var(--gold);
+    }
+
+    .control-btn-icon {
+      background: transparent;
+      border: 1px solid var(--gold-dim);
+      color: var(--gold);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 200ms ease;
+    }
+
+    .control-btn-icon:hover {
+      background: var(--gold);
+      color: var(--black);
+      border-color: var(--gold);
+    }
+
+    .control-btn-icon:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
     }
 
     .playlist-tracks {
@@ -363,10 +426,19 @@
             <div class="playlist-container reveal">
               <div class="player-label">STREAM FULL ALBUM</div>
               <div class="playlist-player">
-                <div class="now-playing" id="now-playing-rivers">Select a track to play</div>
+                <div class="now-playing" id="now-playing-rivers">Select a track or press Play All</div>
                 <audio id="audio-player-rivers" controls preload="metadata">
                   Your browser does not support the audio element.
                 </audio>
+
+                <!-- Player Controls -->
+                <div class="player-controls">
+                  <button id="play-all-btn" class="control-btn">▶ PLAY ALL</button>
+                  <button id="prev-btn" class="control-btn-icon" title="Previous Track" disabled>⏮</button>
+                  <button id="next-btn" class="control-btn-icon" title="Next Track" disabled>⏭</button>
+                  <button id="shuffle-btn" class="control-btn" title="Shuffle">🔀 SHUFFLE</button>
+                  <button id="repeat-btn" class="control-btn" title="Repeat Mode">🔁 REPEAT</button>
+                </div>
               </div>
               <div class="playlist-tracks" id="playlist-rivers">
                 <!-- Tracks will be loaded by JavaScript -->
@@ -684,7 +756,16 @@
     const audioPlayer = document.getElementById('audio-player-rivers');
     const nowPlaying = document.getElementById('now-playing-rivers');
     const playlistContainer = document.getElementById('playlist-rivers');
+    const playAllBtn = document.getElementById('play-all-btn');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const shuffleBtn = document.getElementById('shuffle-btn');
+    const repeatBtn = document.getElementById('repeat-btn');
+
     let currentTrackIndex = -1;
+    let isShuffled = false;
+    let repeatMode = 'off'; // 'off', 'all', 'one'
+    let shuffledPlaylist = [...riversPlaylist];
 
     // Build playlist HTML
     riversPlaylist.forEach((track, index) => {
@@ -701,7 +782,7 @@
 
     function playTrack(index) {
       currentTrackIndex = index;
-      const track = riversPlaylist[index];
+      const track = isShuffled ? shuffledPlaylist[index] : riversPlaylist[index];
 
       // Update audio source
       audioPlayer.src = cdnBase + encodeURIComponent(track.file);
@@ -714,13 +795,101 @@
       document.querySelectorAll('.playlist-track').forEach((el, i) => {
         el.classList.toggle('playing', i === index);
       });
+
+      // Enable/disable prev/next buttons
+      updateControlButtons();
     }
 
-    // Auto-play next track when current ends
-    audioPlayer.addEventListener('ended', () => {
-      if (currentTrackIndex < riversPlaylist.length - 1) {
+    function updateControlButtons() {
+      const playlist = isShuffled ? shuffledPlaylist : riversPlaylist;
+      prevBtn.disabled = currentTrackIndex <= 0;
+      nextBtn.disabled = currentTrackIndex >= playlist.length - 1;
+      playAllBtn.textContent = currentTrackIndex >= 0 ? '⏸ PAUSE' : '▶ PLAY ALL';
+    }
+
+    // Play All button
+    playAllBtn.addEventListener('click', () => {
+      if (currentTrackIndex >= 0 && !audioPlayer.paused) {
+        audioPlayer.pause();
+        playAllBtn.textContent = '▶ PLAY ALL';
+      } else if (currentTrackIndex >= 0 && audioPlayer.paused) {
+        audioPlayer.play();
+        playAllBtn.textContent = '⏸ PAUSE';
+      } else {
+        playTrack(0);
+      }
+    });
+
+    // Previous track
+    prevBtn.addEventListener('click', () => {
+      if (currentTrackIndex > 0) {
+        playTrack(currentTrackIndex - 1);
+      }
+    });
+
+    // Next track
+    nextBtn.addEventListener('click', () => {
+      const playlist = isShuffled ? shuffledPlaylist : riversPlaylist;
+      if (currentTrackIndex < playlist.length - 1) {
         playTrack(currentTrackIndex + 1);
       }
+    });
+
+    // Shuffle toggle
+    shuffleBtn.addEventListener('click', () => {
+      isShuffled = !isShuffled;
+      shuffleBtn.classList.toggle('active', isShuffled);
+
+      if (isShuffled) {
+        // Create shuffled version
+        shuffledPlaylist = [...riversPlaylist].sort(() => Math.random() - 0.5);
+        shuffleBtn.textContent = '🔀 SHUFFLED';
+      } else {
+        shuffledPlaylist = [...riversPlaylist];
+        shuffleBtn.textContent = '🔀 SHUFFLE';
+      }
+    });
+
+    // Repeat mode toggle
+    repeatBtn.addEventListener('click', () => {
+      if (repeatMode === 'off') {
+        repeatMode = 'all';
+        repeatBtn.textContent = '🔁 REPEAT ALL';
+        repeatBtn.classList.add('active');
+      } else if (repeatMode === 'all') {
+        repeatMode = 'one';
+        repeatBtn.textContent = '🔂 REPEAT ONE';
+      } else {
+        repeatMode = 'off';
+        repeatBtn.textContent = '🔁 REPEAT';
+        repeatBtn.classList.remove('active');
+      }
+    });
+
+    // Auto-play next track or repeat
+    audioPlayer.addEventListener('ended', () => {
+      const playlist = isShuffled ? shuffledPlaylist : riversPlaylist;
+
+      if (repeatMode === 'one') {
+        audioPlayer.play();
+      } else if (currentTrackIndex < playlist.length - 1) {
+        playTrack(currentTrackIndex + 1);
+      } else if (repeatMode === 'all') {
+        playTrack(0); // Start from beginning
+      } else {
+        playAllBtn.textContent = '▶ PLAY ALL';
+      }
+    });
+
+    // Update play/pause button when audio state changes
+    audioPlayer.addEventListener('play', () => {
+      if (currentTrackIndex >= 0) {
+        playAllBtn.textContent = '⏸ PAUSE';
+      }
+    });
+
+    audioPlayer.addEventListener('pause', () => {
+      playAllBtn.textContent = '▶ PLAY ALL';
     });
   </script>
 </body>
