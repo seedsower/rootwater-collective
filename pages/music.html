@@ -492,13 +492,27 @@
               class="album-cover-large reveal"
             >
 
-            <!-- Audio Player -->
-            <div class="album-player reveal">
-              <div class="player-label">ALBUM PREVIEW</div>
-              <audio controls preload="metadata" crossorigin="anonymous">
-                <source src="https://cdn.example.com/rootwater-collective/inner-meridian-preview.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-              </audio>
+            <!-- Playlist Player -->
+            <div class="playlist-container reveal">
+              <div class="player-label">STREAM FULL ALBUM</div>
+              <div class="playlist-player">
+                <div class="now-playing" id="now-playing-meridian">Select a track or press Play All</div>
+                <audio id="audio-player-meridian" controls preload="metadata">
+                  Your browser does not support the audio element.
+                </audio>
+
+                <!-- Player Controls -->
+                <div class="player-controls">
+                  <button id="play-all-btn-meridian" class="control-btn">▶ PLAY ALL</button>
+                  <button id="prev-btn-meridian" class="control-btn-icon" title="Previous Track" disabled>⏮</button>
+                  <button id="next-btn-meridian" class="control-btn-icon" title="Next Track" disabled>⏭</button>
+                  <button id="shuffle-btn-meridian" class="control-btn" title="Shuffle">🔀 SHUFFLE</button>
+                  <button id="repeat-btn-meridian" class="control-btn" title="Repeat Mode">🔁 REPEAT</button>
+                </div>
+              </div>
+              <div class="playlist-tracks" id="playlist-meridian">
+                <!-- Tracks will be loaded by JavaScript -->
+              </div>
             </div>
 
             <!-- Streaming Links -->
@@ -719,6 +733,158 @@
 
     audioPlayer.addEventListener('pause', () => {
       playAllBtn.textContent = '▶ PLAY ALL';
+    });
+
+    // Playlist Player for The Inner Meridian
+    const meridianPlaylist = [
+      { number: '01', title: 'Track 01', file: 'track-01.mp3' },
+      { number: '02', title: 'Track 02', file: 'track-02.mp3' },
+      { number: '03', title: 'Track 03', file: 'track-03.mp3' },
+      { number: '04', title: 'Track 04', file: 'track-04.mp3' },
+      { number: '05', title: 'Track 05', file: 'track-05.mp3' },
+      { number: '06', title: 'Track 06', file: 'track-06.mp3' },
+      { number: '07', title: 'Track 07', file: 'track-07.mp3' },
+      { number: '08', title: 'Track 08', file: 'track-08.mp3' },
+      { number: '09', title: 'Track 09', file: 'track-09.mp3' },
+      { number: '10', title: 'Track 10', file: 'track-10.mp3' },
+      { number: '11', title: 'Track 11', file: 'track-11.mp3' },
+      { number: '12', title: 'Track 12', file: 'track-12.mp3' },
+      { number: '13', title: 'Track 13', file: 'track-13.mp3' }
+    ];
+
+    const cdnBaseMeridian = 'https://pub-11d4fa5899204f558f213e9d1764cf44.r2.dev/';
+    const audioPlayerMeridian = document.getElementById('audio-player-meridian');
+    const nowPlayingMeridian = document.getElementById('now-playing-meridian');
+    const playlistContainerMeridian = document.getElementById('playlist-meridian');
+    const playAllBtnMeridian = document.getElementById('play-all-btn-meridian');
+    const prevBtnMeridian = document.getElementById('prev-btn-meridian');
+    const nextBtnMeridian = document.getElementById('next-btn-meridian');
+    const shuffleBtnMeridian = document.getElementById('shuffle-btn-meridian');
+    const repeatBtnMeridian = document.getElementById('repeat-btn-meridian');
+
+    let currentTrackIndexMeridian = -1;
+    let isShuffledMeridian = false;
+    let repeatModeMeridian = 'off';
+    let shuffledPlaylistMeridian = [...meridianPlaylist];
+
+    // Build playlist HTML
+    meridianPlaylist.forEach((track, index) => {
+      const trackEl = document.createElement('div');
+      trackEl.className = 'playlist-track';
+      trackEl.innerHTML = `
+        <div class="track-play-icon"></div>
+        <span class="track-title">${track.title}</span>
+        <span class="track-number">${track.number}</span>
+      `;
+      trackEl.addEventListener('click', () => playTrackMeridian(index));
+      playlistContainerMeridian.appendChild(trackEl);
+    });
+
+    function playTrackMeridian(index) {
+      currentTrackIndexMeridian = index;
+      const track = isShuffledMeridian ? shuffledPlaylistMeridian[index] : meridianPlaylist[index];
+
+      audioPlayerMeridian.src = cdnBaseMeridian + encodeURIComponent(track.file);
+      audioPlayerMeridian.play();
+
+      nowPlayingMeridian.textContent = `${track.number}. ${track.title}`;
+
+      document.querySelectorAll('#playlist-meridian .playlist-track').forEach((el, i) => {
+        el.classList.toggle('playing', i === index);
+      });
+
+      updateControlButtonsMeridian();
+    }
+
+    function updateControlButtonsMeridian() {
+      const playlist = isShuffledMeridian ? shuffledPlaylistMeridian : meridianPlaylist;
+      prevBtnMeridian.disabled = currentTrackIndexMeridian <= 0;
+      nextBtnMeridian.disabled = currentTrackIndexMeridian >= playlist.length - 1;
+      playAllBtnMeridian.textContent = currentTrackIndexMeridian >= 0 ? '⏸ PAUSE' : '▶ PLAY ALL';
+    }
+
+    // Play All button
+    playAllBtnMeridian.addEventListener('click', () => {
+      if (currentTrackIndexMeridian >= 0 && !audioPlayerMeridian.paused) {
+        audioPlayerMeridian.pause();
+        playAllBtnMeridian.textContent = '▶ PLAY ALL';
+      } else if (currentTrackIndexMeridian >= 0 && audioPlayerMeridian.paused) {
+        audioPlayerMeridian.play();
+        playAllBtnMeridian.textContent = '⏸ PAUSE';
+      } else {
+        playTrackMeridian(0);
+      }
+    });
+
+    // Previous track
+    prevBtnMeridian.addEventListener('click', () => {
+      if (currentTrackIndexMeridian > 0) {
+        playTrackMeridian(currentTrackIndexMeridian - 1);
+      }
+    });
+
+    // Next track
+    nextBtnMeridian.addEventListener('click', () => {
+      const playlist = isShuffledMeridian ? shuffledPlaylistMeridian : meridianPlaylist;
+      if (currentTrackIndexMeridian < playlist.length - 1) {
+        playTrackMeridian(currentTrackIndexMeridian + 1);
+      }
+    });
+
+    // Shuffle toggle
+    shuffleBtnMeridian.addEventListener('click', () => {
+      isShuffledMeridian = !isShuffledMeridian;
+      shuffleBtnMeridian.classList.toggle('active', isShuffledMeridian);
+
+      if (isShuffledMeridian) {
+        shuffledPlaylistMeridian = [...meridianPlaylist].sort(() => Math.random() - 0.5);
+        shuffleBtnMeridian.textContent = '🔀 SHUFFLED';
+      } else {
+        shuffledPlaylistMeridian = [...meridianPlaylist];
+        shuffleBtnMeridian.textContent = '🔀 SHUFFLE';
+      }
+    });
+
+    // Repeat mode toggle
+    repeatBtnMeridian.addEventListener('click', () => {
+      if (repeatModeMeridian === 'off') {
+        repeatModeMeridian = 'all';
+        repeatBtnMeridian.textContent = '🔁 REPEAT ALL';
+        repeatBtnMeridian.classList.add('active');
+      } else if (repeatModeMeridian === 'all') {
+        repeatModeMeridian = 'one';
+        repeatBtnMeridian.textContent = '🔂 REPEAT ONE';
+      } else {
+        repeatModeMeridian = 'off';
+        repeatBtnMeridian.textContent = '🔁 REPEAT';
+        repeatBtnMeridian.classList.remove('active');
+      }
+    });
+
+    // Auto-play next track or repeat
+    audioPlayerMeridian.addEventListener('ended', () => {
+      const playlist = isShuffledMeridian ? shuffledPlaylistMeridian : meridianPlaylist;
+
+      if (repeatModeMeridian === 'one') {
+        audioPlayerMeridian.play();
+      } else if (currentTrackIndexMeridian < playlist.length - 1) {
+        playTrackMeridian(currentTrackIndexMeridian + 1);
+      } else if (repeatModeMeridian === 'all') {
+        playTrackMeridian(0);
+      } else {
+        playAllBtnMeridian.textContent = '▶ PLAY ALL';
+      }
+    });
+
+    // Update play/pause button
+    audioPlayerMeridian.addEventListener('play', () => {
+      if (currentTrackIndexMeridian >= 0) {
+        playAllBtnMeridian.textContent = '⏸ PAUSE';
+      }
+    });
+
+    audioPlayerMeridian.addEventListener('pause', () => {
+      playAllBtnMeridian.textContent = '▶ PLAY ALL';
     });
   </script>
 </body>
