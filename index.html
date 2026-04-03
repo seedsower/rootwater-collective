@@ -311,6 +311,28 @@
 
   </main>
 
+  <!-- Hidden forms for Netlify detection (actual forms are in /pages/connect.html) -->
+  <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="contact">
+    <input type="text" name="name">
+    <input type="email" name="email">
+    <select name="subject">
+      <option value="booking">Booking Inquiry</option>
+      <option value="press">Press / Media</option>
+      <option value="collaboration">Collaboration</option>
+      <option value="general">General Question</option>
+      <option value="other">Other</option>
+    </select>
+    <textarea name="message"></textarea>
+    <input type="text" name="bot-field">
+  </form>
+
+  <form name="newsletter" netlify netlify-honeypot="bot-field-newsletter" hidden>
+    <input type="hidden" name="form-name" value="newsletter">
+    <input type="email" name="email">
+    <input type="text" name="bot-field-newsletter">
+  </form>
+
   <script src="js/main.js"></script>
 </body>
 </html>
