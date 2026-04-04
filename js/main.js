@@ -186,137 +186,17 @@ if (document.querySelector('.accordion')) {
 // NEWSLETTER FORM
 // ====================================
 
-function initNewsletterForm() {
-  const form = document.querySelector('.newsletter-form');
-  if (!form) return;
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const emailInput = form.querySelector('input[type="email"]');
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const email = emailInput.value;
-
-    // Basic validation
-    if (!email || !email.includes('@')) {
-      showMessage(form, 'Please enter a valid email address.', 'error');
-      return;
-    }
-
-    // Disable button during submission
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Joining...';
-
-    // TODO: Replace with actual API endpoint
-    // For now, simulate submission
-    setTimeout(() => {
-      showMessage(form, 'You\'ve joined the frequency. Check your email.', 'success');
-      emailInput.value = '';
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Join the Frequency';
-    }, 1000);
-
-    // Example API call:
-    /*
-    try {
-      const response = await fetch('/api/newsletter', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-
-      if (response.ok) {
-        showMessage(form, 'You\'ve joined the frequency. Check your email.', 'success');
-        emailInput.value = '';
-      } else {
-        showMessage(form, 'Something went wrong. Try again.', 'error');
-      }
-    } catch (error) {
-      showMessage(form, 'Connection error. Try again.', 'error');
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Join the Frequency';
-    }
-    */
-  });
-}
-
-function showMessage(form, message, type) {
-  const existingMessage = form.querySelector('.form-message');
-  if (existingMessage) existingMessage.remove();
-
-  const messageEl = document.createElement('p');
-  messageEl.className = `form-message form-message--${type}`;
-  messageEl.textContent = message;
-  messageEl.style.cssText = `
-    margin-top: 1rem;
-    font-size: 0.9rem;
-    color: ${type === 'success' ? 'var(--gold)' : 'var(--red)'};
-  `;
-
-  form.appendChild(messageEl);
-
-  setTimeout(() => messageEl.remove(), 5000);
-}
-
-if (document.querySelector('.newsletter-form')) {
-  initNewsletterForm();
-}
+// Newsletter form - handled by Netlify Forms
+// Form submission is handled natively by Netlify, no JavaScript needed
+// Success/error messages are shown via URL parameters in connect.html
 
 // ====================================
 // CONTACT FORM
 // ====================================
 
-function initContactForm() {
-  const form = document.querySelector('.contact-form');
-  if (!form) return;
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData);
-    const submitBtn = form.querySelector('button[type="submit"]');
-
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Sending...';
-
-    // TODO: Replace with actual API endpoint
-    setTimeout(() => {
-      showMessage(form, 'Message received. We\'ll respond soon.', 'success');
-      form.reset();
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Send Message';
-    }, 1000);
-
-    // Example API call:
-    /*
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        showMessage(form, 'Message received. We\'ll respond soon.', 'success');
-        form.reset();
-      } else {
-        showMessage(form, 'Failed to send. Try again.', 'error');
-      }
-    } catch (error) {
-      showMessage(form, 'Connection error. Try again.', 'error');
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Send Message';
-    }
-    */
-  });
-}
-
-if (document.querySelector('.contact-form')) {
-  initContactForm();
-}
+// Contact form - handled by Netlify Forms
+// Form submission is handled natively by Netlify, no JavaScript needed
+// Success/error messages are shown via URL parameters in connect.html
 
 // ====================================
 // LYRICS SEARCH
