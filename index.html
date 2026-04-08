@@ -74,7 +74,30 @@
   <main id="main-content" class="page-content">
 
     <!-- HERO SECTION -->
-    <section class="hero" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; text-align: center;">
+    <section class="hero" style="
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      text-align: center;
+      background-image: url('/images/rivers-roots-cover.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    ">
+
+      <!-- Dark overlay for text readability -->
+      <div style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(10, 10, 8, 0.7) 0%, rgba(10, 10, 8, 0.85) 100%);
+        z-index: 0;
+      "></div>
 
       <!-- Ripple Effect -->
       <div class="ripple-container breathing">
@@ -83,13 +106,13 @@
         <div class="ripple"></div>
       </div>
 
-      <h1 style="margin-bottom: 2rem;">ROOTWATER<br>COLLECTIVE</h1>
-      <p class="accent-text" style="font-size: clamp(1.2rem, 2.5vw, 1.8rem); max-width: 700px; line-height: 1.6;">
+      <h1 style="margin-bottom: 2rem; position: relative; z-index: 1;">ROOTWATER<br>COLLECTIVE</h1>
+      <p class="accent-text" style="font-size: clamp(1.2rem, 2.5vw, 1.8rem); max-width: 700px; line-height: 1.6; position: relative; z-index: 1;">
         The album where reggae remembered it was a theory of everything
       </p>
 
       <!-- Scroll Indicator -->
-      <div class="scroll-indicator"></div>
+      <div class="scroll-indicator" style="position: relative; z-index: 1;"></div>
     </section>
 
     <!-- ALBUMS SECTION -->
